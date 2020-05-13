@@ -1,0 +1,217 @@
+.nav-bar {
+    height: 50px;
+    display: flex;
+    background-color: #282830;
+    margin: 0 auto;
+    max-width: 1000px;
+
+
+}
+.nav-bar li{
+    border-right: 1px solid white;
+    width: calc(100%/4);
+    max-width: 250px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-weight: bold;
+    transition: background-color 0.3s;
+}
+
+
+.nav-bar>li:first-child{
+    border-left:  1px solid white;
+}
+
+.nav-bar>li:last-child>i{
+    margin-left: 5px;
+}
+
+.nav-bar li a {
+    color: white;
+    display: block;
+    font-weight: bold;
+}
+.nav-bar li:hover {
+    background-color: #a09c9c;
+    cursor: pointer;
+}
+
+.inner-list {
+    display: none;
+    position: absolute;
+    top: 100px;
+    list-style: none;
+}
+
+/* отображаем выпадающий список при наведении */
+.nav-bar li:hover > ul {
+    display:block;
+}
+
+/* первый уровень выпадающего списка */
+.inner-list li {
+    border-right: 1px solid white;
+    border-left:  1px solid white;
+    max-width: 250px;
+    width:calc(100vw/4);
+    height: 45px;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    background-color:#282830 ;
+}
+
+.inner-list li:hover {
+    color: white;
+    background-color: #a09c9c;
+    cursor: pointer;
+}
+
+
+.main{
+
+}
+
+
+.greeting_and_date{
+    color: #8e7d81;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 50px;
+}
+.titles{
+    border-top: 2px solid black;
+}
+@media (max-width: 490px) {
+    .greeting_and_date #greeting{
+        display: none;
+    }
+
+    .greeting_and_date {
+        justify-content: center;
+    }
+}
+
+@media (min-width: 900px) {
+    .main_news{
+        display: flex;
+    }
+    .foto{
+        width: 60%;
+    }
+
+    .foto img{
+        min-height: 200px;
+    }
+    .signature{
+        width: 40%;
+    }
+
+
+}
+
+
+
+.main_news{
+
+}
+.foto{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.foto img{
+    max-height: 250px;
+    max-width: 100%;
+}
+.main a:hover{
+    color: #1dabb8;
+    transition: color 0.3s;
+}
+
+.signature{
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 10px;
+}
+
+.title{
+    text-align: center;
+
+}
+
+
+
+.meta_tags a{
+    color: #8e7d81;
+}
+
+.link{
+
+    display: flex;
+    justify-content: space-between;
+    color: #8e7d81;
+}
+
+.author{
+    display: flex;
+    align-items: center;
+}
+
+.posts_date{
+    color: #8e7d81;
+}
+
+.meta_tags{
+    text-align: right;
+}
+
+.author_date{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.fa-user-circle{
+    font-size: 30px;
+}
+.news{
+    padding: 20px 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fit,minmax(400px,1fr));
+    grid-gap: 20px;
+}
+
+.news>div{
+    border-bottom: 2px solid black;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 300px;
+
+}
+.image{
+    float: left;
+    margin: 5px;
+}
+
+.image img{
+    max-height: 200px;
+    max-width: 200px;
+}
+
+
+.posts_body{
+
+    overflow: hidden;
+}
+
+

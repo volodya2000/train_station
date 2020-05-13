@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://kit.fontawesome.com/10404fa3b3.js" crossorigin="anonymous"></script>
+    <link href="../../static/css/page.css" th:href="@{/css/page.css}" rel="stylesheet" />
+    <link href="../../static/css/home-style.css" th:href="@{/css/home-style.css}" rel="stylesheet" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="../../static/css/pagination.css" th:href="@{/css/pagination.css}" rel="stylesheet" />
+</head>
+<body>
+<div class="wrapper">
+    <header class="main-head">
+        <div class="logo">
+            <a href="home"><h1 th:text="${brigadeName}"></h1></a>
+        </div>
+        <nav class="main-nav">
+            <ul class="nav-bar">
+                <li><a th:href="@{'~/driverBrigade/'+${brigadeName}}">All workers in brigade</a></li>
+                <li><a href="news">Workers,servicing certain train</a></li>
+                <li><a th:href="@{'~/driverBrigade/'+${brigadeName}+'/age'}">Workers by age</a></li>
+                <li><a th:href="@{'~/driverBrigade/'+${brigadeName}+'/salary'}">Workers by salary</a></li>
+            </ul>
+        </nav>
+    </header>
+    <div class="content">
+        <div class="main-content">
+
+            <table style="width:100%">
+                <tr>
+                    <th>Name</th>
+                    <th>Brigade name</th>
+                    <th>Sex</th>
+                </tr>
+                <tr th:each="w:${driversList}">
+                    <td th:text="${w.getName()}">Jill</td>
+                    <td th:text="${w.getSex()}">Smith</td>
+                    <td th:text="${w.getAge()}">50</td>
+                </tr>
+            </table>
+
+        </div>
+        <div class="pagination" th:fragment="pagination">
+            <div class="col-md-2"></div>
+            <div class="col-md-8">
+                <nav aria-label="Pagination">
+                    <ul class="pagination justify-content-center">
+                        <li style="display: inline" class="page-item" th:each="pageNumber : ${pageNumbers}" >
+                            <form  th:action="@{/driverBrigade/} + ${brigadeName} +@{/salary}" method="post">
+                                <input type="hidden"  name="Salary" th:value="${Salary}">
+                                <input type="submit" th:value="${pageNumber}">
+                            </form>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+            <div class="col-md-2"></div>
+        </div>
+    </div>
+
+</div>
+<footer class="main-footer"><p>Copyright&copy; 2020</p></footer>
+</body>
+</html>

@@ -1,0 +1,102 @@
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+@import url('https://fonts.googleapis.com/css?family=Lato&display=swap');
+    font-family: 'Lato', sans-serif;
+
+}
+
+body{
+    font-size: 0.875rem;
+    font-weight: 400;
+    line-height:  1.5;
+    background-color: #f1f1f1;
+}
+
+a{
+    text-decoration: none;
+
+}
+
+.wrapper {
+    min-height: 100vh;
+    min-width: 320px;
+}
+.main-head {
+    position: fixed;
+    height: 100px;
+    width: 100%;
+    min-width: 320px;
+    z-index: 20;
+
+}
+.main-nav{
+    background-color: #282830;
+    height: 50px;
+}
+.logo{
+    height: 50px;
+    color:#343434;
+    text-align: center;
+    background: white;
+
+}
+
+.logo a {
+    color:#343434;
+}
+
+.logo a:hover{
+    color: #343434;
+}
+
+
+.content {
+    padding-top: 100px;
+    min-height: calc(100vh - 160px);
+    background-color: #f1f1f1;
+}
+.main-content{
+    max-width: 1000px;
+    width: 90%;
+    margin: 0 auto;
+}
+
+.main{
+    min-height: calc(100vh - 160px);
+
+}
+
+/*.ads{*/
+/*    height: 100px;*/
+/*    text-align: center;*/
+/*   */
+/*   */
+/*}*/
+
+
+
+.social-icons{
+    font-size: 2.1em;
+    text-align: center;
+
+}
+
+.social-icons a{
+    color: black;
+    transition: color 0.3s;
+}
+
+.social-icons a:hover{
+    color:#1dabb8;
+}
+
+.main-footer {
+    background-color: #282830;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 60px;
+}
