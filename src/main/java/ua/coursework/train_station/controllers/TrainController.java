@@ -310,7 +310,7 @@ public class TrainController {
         model.addAttribute("start",start);
         model.addAttribute("finish",finish);
         model.addAttribute("duration",duration);
-
+        System.out.println("hello");
         model.addAttribute("trainsList",trains.getContent());
         return"train/trainsByRoutes";
     }
