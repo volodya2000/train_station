@@ -19,10 +19,11 @@
 
         <nav class="main-nav">
             <ul class="nav-bar">
-                <li><a href="/allTrains">All trains</a></li>
-                <li><a href="/trainsNow">At current time</a></li>
-                <li><a href="/trainsByArrival">Find by arrival time</a></li>
-                <li><a href="/trainsByTrip"></a>Find by trip amount</li>
+                <li><a href="/trainsInspection">All trains by dates of inspection</a></li>
+                <li><a href="/trainsDayInspection">All trains by day of inspection</a></li>
+                <li><a href="/trainsNumberInspection">All trains by number of inspection</a></li>
+                <li><a href="/trainsAge">All trains by age</a></li>
+                <li><a href="/trainsTrips">All trains by number of trips</a></li>
             </ul>
         </nav>
     </header>
@@ -32,7 +33,7 @@
             <form th:action="@{/trainsDatesOfInspection}"   method="get" >
                 <div class="form-group">
                     <label >  Choose day of inspection:</label>
-                    <input type="date" name="date">
+                    <input type="text" name="date">
                 </div>
                 <button type="submit" class="btn btn-primary">Submit</button>
             </form>

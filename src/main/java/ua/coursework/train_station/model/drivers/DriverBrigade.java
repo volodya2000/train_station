@@ -54,4 +54,8 @@ public class DriverBrigade {
     public void setDriverDepartment(DriverDepartment driverDepartment) {
         this.driverDepartment = driverDepartment;
     }
+
+    public Long getId() {
+        return id;
+    }
 }

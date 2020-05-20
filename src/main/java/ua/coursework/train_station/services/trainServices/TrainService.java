@@ -17,30 +17,28 @@ import java.util.Date;
 public class TrainService {
 
     private TrainRepository trainRepository;
-    private RouteRepository routeRepository;
 
     @Autowired
-    public TrainService(TrainRepository trainRepository, RouteRepository routeRepository) {
+    public TrainService(TrainRepository trainRepository ) {
         this.trainRepository = trainRepository;
-        this.routeRepository = routeRepository;
     }
 
     public Page<Train>findAll(Pageable pageable)
     {return trainRepository.findAll(pageable);}
 
     public Page<Train>findTrainAtStationInCurrentTime(Date date, Pageable pageable)
-    {return trainRepository.findAllByRoute(routeRepository.findRouteByBeginOfTripGreaterThanAndEndOfTripLessThan(date,date),pageable);}
+    {return trainRepository.findAllAtCurrentTime(date,pageable);}
 
-    public Page<Train>findTrainAtStationByArrivalTime(Date date, Pageable pageable)
+    public Page<Train>findTrainAtStationByArrivalTime(String date, Pageable pageable)
     {return trainRepository.findAllByRouteEndOfTrip(date,pageable);}
 
     public Page<Train>findTrainByNumberOfTrips(int number,Pageable pageable)
     {return trainRepository.findAllByNumberOfTrips(number,pageable);}
 
-    public Page<Train>findTrainBetweenDatesOfInspection(Date date1,Date date2,Pageable pageable)
+    public Page<Train>findTrainBetweenDatesOfInspection(String date1,String date2,Pageable pageable)
     {return trainRepository.findAllByDateOfInspectionBetween(date1,date2,pageable);}
 
-    public Page<Train>findTrainByDateOfInspection(Date date,Pageable pageable)
+    public Page<Train>findTrainByDateOfInspection(String date,Pageable pageable)
     {return  trainRepository.findAllByDateOfInspection(date,pageable);}
 
     public Page<Train>findTrainByNumberOfInspections(int number,Pageable pageable)
@@ -63,4 +61,40 @@ public class TrainService {
 
     public Page<Train>findTrainByRoutePriceAndDurationAndStationsName(int price,int duration,String start,String finish,Pageable pageable)
     {return trainRepository.findAllByRoutePriceAndRouteDurationAndRouteStartStationAndRouteFinalStation(price, duration, start, finish,pageable);}
+
+    public int countAllTrainsByEndOfTrip(String date)
+    {return trainRepository.countAllTrainsByEndOfTrip(date);}
+
+    public int countAllTrainsByNumberOfTrips(int number)
+    {return trainRepository.countAllTrainsByNumberOfTrips(number);}
+
+    public int countAllTrainsByDateOfInspectionBetween(String date1,String date2)
+    {return trainRepository.countAllTrainsByDateOfInspectionBetween(date1,date2);}
+
+    public int countAllTrainsByDateOfInspection(String date)
+    {return trainRepository.countAllTrainsByDateOfInspection(date);}
+
+    public int countAllTrainsByNumberOfInspections(int number)
+    {return trainRepository.countAllTrainsByNumberOfInspections(number);}
+
+    public int countAllTrainsByAge(int age)
+    {return trainRepository.countAllTrainsByAge(age);}
+
+    public int countAllByRouteStations(String start,String finish)
+    {return trainRepository.countAllByRouteStations(start, finish);}
+
+    public int countAllByRouteDuration(int duration)
+    {return trainRepository.countAllByRouteDuration(duration);}
+
+    public int countAllByRoutePrice(int price)
+    {return trainRepository.countAllByRoutePrice(price);}
+
+    public int countAllTrainsByRouteAndDurationAndPrice(int price,int duration,String start,String finish)
+    {return trainRepository.countAllTrainsByRouteAndDurationAndPrice(price, duration, start, finish);}
+
+    public int countAll()
+    {return trainRepository.countAll();}
+
+    public int countAllAtCurrentTime(Date date)
+    {return trainRepository.countAllAtCurrentTime(date);}
 }

@@ -22,13 +22,14 @@
                 <li><a href="/allTrains">All trains</a></li>
                 <li><a href="/trainsNow">At current time</a></li>
                 <li><a href="/trainsByArrival">Find by arrival time</a></li>
-                <li><a href="/trainsByTrip"></a>Find by trip amount</li>
+                <li><a href="/trainsByTrip">Find by trip amount</a></li>
             </ul>
         </nav>
     </header>
     <div class="content">
         <div class="main-content">
-
+            <p>Number of trains</p>
+            <p style="color: red" th:text="${count}"> </p>
             <table style="width:100%">
                 <tr>
                     <th>Name of train</th>

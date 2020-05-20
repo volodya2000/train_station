@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://kit.fontawesome.com/10404fa3b3.js" crossorigin="anonymous"></script>
+    <link href="../../static/css/page.css" th:href="@{/css/page.css}" rel="stylesheet" />
+    <link href="../../static/css/home-style.css" th:href="@{/css/home-style.css}" rel="stylesheet" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+<div class="wrapper">
+    <header class="main-head">
+        <div class="logo">
+            <a href="home"><h1>Free ServletBlog</h1></a>
+        </div>
+
+        <nav class="main-nav">
+        </nav>
+    </header>
+    <div class="content">
+        <div class="main-content">
+
+            <p>Number of railway repairmen</p>
+            <p style="color: red" th:text="${count}"> </p>
+            <table style="width:100%">
+                <tr>
+                    <th>Name </th>
+                    <th>Surname</th>
+                    <th>Age</th>
+                    <th>Salary</th>
+                </tr>
+                <tr th:each="w:${railwayRepairmenList}">
+                    <td th:text="${w.getName()}">Jill</td>
+                    <td th:text="${w.getSurname()}">Smith</td>
+                    <td th:text="${w.getAge()}">50</td>
+                    <td th:text="${w.getSalary()}">50</td>
+                </tr>
+            </table>
+
+            <div class="pagination" th:fragment="pagination">
+                <div class="col-md-2"></div>
+                <div class="col-md-8">
+                    <nav aria-label="Pagination">
+                        <ul class="pagination justify-content-center">
+                            <li style="display: inline" class="page-item" th:each="pageNumber : ${pageNumbers}" >
+                                <a class="page-link" th:href="@{|/railwayRepairmenAll?count=${count}&page=${pageNumber}|}" th:text=${pageNumber}>1</a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+                <div class="col-md-2"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+</div>
+</body>
+<footer class="main-footer"><p>Copyright&copy; 2020</p></footer>
+</html>

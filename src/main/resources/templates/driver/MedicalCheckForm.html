@@ -19,25 +19,17 @@
 
         <nav class="main-nav">
             <ul class="nav-bar">
-                <li><a href="/departments">Departments</a></li>
-                <li><a href="news">All posts</a></li>
-                <li><a href="find">Find post</a></li>
-                <li>Account <i  class="fas fa-bars"></i>
-                    <ul class="inner-list" >
-                        <li><a href="profile" id="profile">Profile</a></li>
-                        <li><a href="#" id="setttings">Actions</a></li>
-                        <li id="logout">
-                            <a href="logout" id="settings">Log Out</a>
-                        </li>
-                    </ul>
-                </li>
+                        <li><a href="/driverGender" id="profile">Get drivers by gender</a></li>
+                        <li><a href="driverAge" id="setttings">Get drivers by age</a></li>
+                        <li><a href="/driverSalary" id="settings">Get drivers by salary</a></li>
+                        <li><a href="/driverMedicalCheck" id="setings">Get drivers by medical check form</a></li>
             </ul>
         </nav>
     </header>
     <div class="content">
         <div class="main-content">
 
-            <form th:action="@{/driverMedicalCheck}"   method="post" >
+            <form th:action="@{/driversMedicalCheck}"   method="get" >
                 <div class="form-group">
                     <label > Name:</label>
                     <input type="text" name="year">

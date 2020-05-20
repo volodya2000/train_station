@@ -237,4 +237,19 @@ public class RailwayRepairmanController {
         model.addAttribute("Salary",salary);
         return "railwayRepairman/railwayRepairmenSalaryInBrigade";
     }
+
+    @GetMapping("/railwayRepairmenAll")
+    public String allRepairmen(@RequestParam(name = "page",defaultValue = "1")int page ,Model model)
+    {
+        PageRequest pageable=PageRequest.of(page-1,15);
+        Page<RailwayRepairman>railwayRepairmen=railwayRepairmanService.findAll(pageable);
+        if(railwayRepairmen.getTotalPages()>0)
+        {
+            List<Integer>pageNumbers=IntStream.rangeClosed(1,railwayRepairmen.getTotalPages()).boxed().collect(Collectors.toList());
+            model.addAttribute("pageNumbers",pageNumbers);
+        }
+        model.addAttribute("count",railwayRepairmen.getContent().size());
+        model.addAttribute("railwayRepairmenList",railwayRepairmen.getContent());
+        return "railwayRepairman/allRepairmen";
+    }
 }

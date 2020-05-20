@@ -34,6 +34,9 @@ public class WorkerService {
     public List<? extends Worker>findAllByChildrenAmount(int childrenAmount)
     {return workerRepository.findAllByChildrenAmount(childrenAmount);}
 
-    public List<? extends Worker>findAllBySalary(int salsary)
-    {return workerRepository.findAllBySalary(salsary);}
+    public List<? extends Worker>findAllBySalary(int salary)
+    {return workerRepository.findAllBySalary(salary);}
+
+    public List<? extends Worker >findAllHeadOfDepartment()
+    {return workerRepository.findAllHeadOfDepartment();}
 }

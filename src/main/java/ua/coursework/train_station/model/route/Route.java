@@ -1,8 +1,11 @@
 package ua.coursework.train_station.model.route;
 
+import ua.coursework.train_station.model.pausedTrip.PausedTrip;
+import ua.coursework.train_station.model.ticket.Ticket;
 import ua.coursework.train_station.model.train.Train;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -23,6 +26,10 @@ public class Route {
     @Temporal(TemporalType.DATE)
     private Date endOfTrip;
 
+    @ManyToOne
+    @JoinColumn(name = "paused_trip_id")
+    private PausedTrip pausedTrip;
+
     private int duration;
 
     private String mainHalts;
@@ -37,13 +44,19 @@ public class Route {
 
     private String direction;
 
+
     @Enumerated(EnumType.STRING)
     private RouteType routeType;
+
+    @OneToMany(mappedBy = "route")
+    private List<Ticket>tickets=new ArrayList<>();
+
+
 
     public Route() {
     }
 
-    public Route(String  direction,RouteType type,int price,boolean delayed,String finalStation,String startStation,List<Train> train, Date beginOfTrip, Date endOfTrip, int duration, String mainHalts) {
+    public Route(List<Ticket>tickets,PausedTrip pausedTrip, String  direction,RouteType type,int price,boolean delayed,String finalStation,String startStation,List<Train> train, Date beginOfTrip, Date endOfTrip, int duration, String mainHalts) {
         this.train = train;
         this.beginOfTrip = beginOfTrip;
         this.endOfTrip = endOfTrip;
@@ -55,6 +68,9 @@ public class Route {
         this.price=price;
         this.routeType=type;
         this.direction=direction;
+        this.pausedTrip=pausedTrip;
+        this.tickets=tickets;
+
     }
 
     public long getId() {
@@ -154,4 +170,23 @@ public class Route {
     public void setRouteType(RouteType routeType) {
         this.routeType = routeType;
     }
+
+    public PausedTrip getPausedTrip() {
+        return pausedTrip;
+    }
+
+    public void setPausedTrip(PausedTrip pausedTrip) {
+        this.pausedTrip = pausedTrip;
+    }
+
+
+    public List<Ticket> getTickets() {
+        return tickets;
+    }
+
+    public void setTickets(List<Ticket> tickets) {
+        this.tickets = tickets;
+    }
+
+
 }

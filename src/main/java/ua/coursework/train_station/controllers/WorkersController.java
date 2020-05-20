@@ -42,9 +42,10 @@ public class WorkersController {
         return "WorkersList";
     }
 
-//    @GetMapping("/allHeadOfDepartments")
-//    public String getAllHeadOfDepartments()
-//    {
-//
-//    }
+    @GetMapping("/allHeadOfDepartments")
+    public String getAllHeadOfDepartments(Model model)
+    {
+        model.addAttribute("workersList",workerService.findAllHeadOfDepartment());
+        return "workerDep";
+    }
 }

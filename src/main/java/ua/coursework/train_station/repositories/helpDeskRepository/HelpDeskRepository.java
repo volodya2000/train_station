@@ -2,6 +2,7 @@ package ua.coursework.train_station.repositories.helpDeskRepository;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 import ua.coursework.train_station.model.Gender;
@@ -16,7 +17,19 @@ import java.util.List;
 @Repository
 public interface HelpDeskRepository extends CrudRepository<HelpDeskServiceMan,Long> {
     Page<HelpDeskServiceMan> findAll();
+
+    @Query(nativeQuery = true,value = "select * from help_desk_service_man")
     Page<HelpDeskServiceMan>findAll(Pageable pageable);
+
+    @Query(nativeQuery = true,value = "select count(*) from help_desk_service_man")
+    int countAll();
+
+    int countAllByExperience(int experience);
+    int countAllBySex(Gender gender);
+    int countAllByAge(int age);
+    int countAllByChildrenAmount(int amount);
+    int countAllBySalary(int salary);
+
     Page<HelpDeskServiceMan>findAllByExperience(int experience,Pageable pageable);
     Page<HelpDeskServiceMan>findAllBySex(Gender gender, Pageable pageable);
     Page<HelpDeskServiceMan>findAllByAge(int age,Pageable pageable);

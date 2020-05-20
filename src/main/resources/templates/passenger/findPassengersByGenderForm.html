@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://kit.fontawesome.com/10404fa3b3.js" crossorigin="anonymous"></script>
+    <link href="../../static/css/page.css" th:href="@{/css/page.css}" rel="stylesheet" />
+    <link href="../../static/css/home-style.css" th:href="@{/css/home-style.css}" rel="stylesheet" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+<div class="wrapper">
+    <header class="main-head">
+        <div class="logo">
+            <a href="home"><h1>Free ServletBlog</h1></a>
+        </div>
+
+        <nav class="main-nav">
+            <ul class="nav-bar">
+                <li><a href="/passengersByRouteForm">Passengers by route </a></li>
+                <li><a href="/passengersByDepartureForm">Passengers by date of departure</a></li>
+                <li><a href="/passengersByExternalTripForm">Passengers . travelling abroad </a></li>
+                <li><a href="/passengersByLuggageForm">Passengers,which took luggage option</a></li>
+                <li><a href="/passengersByGenderForm">Passengers by gender</a></li>
+                <li><a href="/passengersByAgeForm">Passenger by age</a></li>
+            </ul>
+        </nav>
+    </header>
+    <div class="content">
+        <div class="main-content">
+
+            <form th:action="@{/passengersByGender}"   method="get" >
+                 <div class="form-group">
+                <label > Gender:</label>
+                <select>
+                    <option th:each="genders :${gender}" th:text="${genders.name()}" th:name="gender" th:value="${genders}">
+                    </option>
+                </select>
+            </div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+
+
+        </div>
+
+    </div>
+
+</div>
+
+</div>
+<footer class="main-footer"><p>Copyright&copy; 2020</p></footer>
+</body>
+</html>

@@ -20,14 +20,15 @@
         <nav class="main-nav">
             <ul class="nav-bar">
                 <li><a href="/delayedRoutes">All delayed routes</a></li>
-                <li><a href="/delayedDirection">Delayed routes by type</a></li>
-                <li><a href="/delayedByStations">Delayed routes by direction</a></li>
+                <li><a href="/delayedDirection">Delayed routes by direction</a></li>
+                <li><a href="/delayedByStations">Delayed routes by start and final stations</a></li>
             </ul>
         </nav>
     </header>
     <div class="content">
         <div class="main-content">
-            <p style="color: red" th:text="Number of trains  ${count}"> </p>
+            <p>Number of trains</p>
+            <p style="color: red" th:text="${count}"> </p>
             <table style="width:100%">
                 <tr>
                     <th>Start station</th>

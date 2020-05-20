@@ -16,6 +16,12 @@ import java.util.List;
 @Repository
 public interface TrainServicemanRepository  extends CrudRepository<TrainServiceman,Long> {
 
+    int countAllByExperience(int experience);
+    int countAllBySex(Gender gender);
+    int countAllByAge(int age);
+    int countAllByChildrenAmount(int amount);
+    int countAllBySalary(int salary);
+
     Page<TrainServiceman> findAll();
     Page<TrainServiceman>findAll(Pageable pageable);
     Page<TrainServiceman>findAllByExperience(int experience,Pageable pageable);

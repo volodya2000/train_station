@@ -2,6 +2,7 @@ package ua.coursework.train_station.repositories.trainRepairmanRepository;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 import ua.coursework.train_station.model.Gender;
@@ -15,8 +16,19 @@ import java.util.List;
 
 @Repository
 public interface TrainRepairmanRepository extends CrudRepository<TrainRepairman,Long> {
-    Page<TrainRepairman> findAll();
+
+    @Query(nativeQuery = true,value = "select * from train_repairman inner join worker w on train_repairman.id = w.id")
     Page<TrainRepairman>findAll(Pageable pageable);
+
+   @Query(nativeQuery = true,value = "select count(*) from train_repairman inner join worker w on train_repairman.id = w.id")
+    int countAll();
+
+    int countAllByExperience(int experience);
+    int countAllBySex(Gender gender);
+    int countAllByAge(int age);
+    int countAllByChildrenAmount(int amount);
+    int countAllBySalary(int salary);
+
     Page<TrainRepairman>findAllByExperience(int experience,Pageable pageable);
     Page<TrainRepairman>findAllBySex(Gender gender, Pageable pageable);
     Page<TrainRepairman>findAllByAge(int age,Pageable pageable);

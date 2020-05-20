@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import ua.coursework.train_station.model.Gender;
 import ua.coursework.train_station.model.drivers.Driver;
 import ua.coursework.train_station.model.drivers.DriverBrigade;
+import ua.coursework.train_station.model.ticket.Ticket;
 import ua.coursework.train_station.services.driverServices.DriverBrigadeService;
 import ua.coursework.train_station.services.driverServices.DriverService;
 
@@ -49,18 +50,31 @@ public class DriverController {
         return new Driver();
     }
 
+    //3
     @GetMapping("/driverMedicalCheck")//+
     public String driverMedicalCheckForm()
     {
-        return "MedicalCheckForm";
+        return "driver/MedicalCheckForm";
     }
 
-    //@PostMapping("/driverMedicalCheck")//+
-   // public String medicalCheck(@RequestParam("year") int year, Model model)
-   // {
-//        model.addAttribute("driversList",driverService.findAllByYearOfMedicalCheckGreaterThanEqual(year));
-//        return "allDriversList";
-   // }
+    //3
+    @GetMapping("/driversMedicalCheck")//+
+    public String medicalCheck(@RequestParam("year") int year, Model model,@RequestParam(name = "page",defaultValue = "1") int page)
+    {
+        PageRequest pageable = PageRequest.of(page - 1, 15);
+        Page<Driver> workers=driverService.findAllByYearOfMedicalCheckGreaterThanEqual(year,pageable);
+       // driverService.deleteByMedicalCheck(year);
+        int totalPages=workers.getTotalPages();
+        if(totalPages>0)
+        {
+            List<Integer> pageNumbers= IntStream.rangeClosed(1,totalPages).boxed().collect(Collectors.toList());
+            model.addAttribute("pageNumbers",pageNumbers);
+        }
+        model.addAttribute("year",year);
+        model.addAttribute("count",workers.getContent().size());
+        model.addAttribute("driversList",workers.getContent());
+        return "driver/driversMedicalCheck";
+    }
 
 
     @GetMapping("/driverExperience")//+
@@ -86,13 +100,13 @@ public class DriverController {
         model.addAttribute("driversList", workers.getContent());
         return "driver/driversExperienceList";
     }
-
+    //3
     @GetMapping("/driverGender")//+
     public String getDriverChildrenForm()
     {
         return "driver/GenderCheckForm";
     }
-
+    //3
     @GetMapping("/driversGender")//+
     public String sendDriverGenderForm(@ModelAttribute("sex") Gender sex,Model model,@RequestParam(name = "page",required = false,defaultValue = "1") int page)
     {
@@ -103,6 +117,7 @@ public class DriverController {
             List<Integer> pageNumbers = IntStream.rangeClosed(1, totalPages).boxed().collect(Collectors.toList());
             model.addAttribute("pageNumbers", pageNumbers);
         }
+        model.addAttribute("count",driverService.countAllBySex(sex.name()));
         model.addAttribute("paramName","sex");
         model.addAttribute("paramValue",sex);
         model.addAttribute("driverAgeUrl","/driversGender?page");
@@ -135,13 +150,13 @@ public class DriverController {
     }
 
 
-
+    //3
     @GetMapping("/driverAge")//+
     public String driverAgeCheckForm()
     {
         return "driver/AgeCheckForm";
     }
-
+    //3
     @GetMapping("/driversAge")//+
     public String ageCheck(@RequestParam(name = "page",required = false,defaultValue = "1") int page,
                            @RequestParam(value = "age",required = false) int age, Model model) {
@@ -152,6 +167,7 @@ public class DriverController {
             List<Integer> pageNumbers = IntStream.rangeClosed(1, totalPages).boxed().collect(Collectors.toList());
             model.addAttribute("pageNumbers", pageNumbers);
         }
+        model.addAttribute("count",driverService.countAllByAge(age));
         model.addAttribute("paramName","age");
         model.addAttribute("paramValue",age);
         model.addAttribute("driverAgeUrl","/driversAge?page");
@@ -159,12 +175,13 @@ public class DriverController {
         return "driver/driversAgeList";
     }
 
+    //3
     @GetMapping("/driverSalary")//+
     public String driverSalaryCheckForm()
     {
         return "driver/SalaryCheckForm";
     }
-
+    //3
     @GetMapping("/driversSalary")//+
     public String salaryCheck(@RequestParam("salary") int salary,Model model,
                               @RequestParam(name = "page",required = false,defaultValue = "1") int page)
@@ -176,6 +193,7 @@ public class DriverController {
             List<Integer> pageNumbers = IntStream.rangeClosed(1, totalPages).boxed().collect(Collectors.toList());
             model.addAttribute("pageNumbers", pageNumbers);
         }
+        model.addAttribute("count",driverService.countAllBySalary(salary));
         model.addAttribute("paramName","salary");
         model.addAttribute("paramValue",salary);
         model.addAttribute("driverAgeUrl","/driversSalary?page");
@@ -217,7 +235,7 @@ public class DriverController {
                           @RequestParam(name = "page",required = false,defaultValue = "1") int page)
     {
         PageRequest pageable = PageRequest.of(page - 1, 15);
-        Page<Driver> drivers=driverService.findAllByBrigade(driverBrigadeService.findByName(brigadeName),pageable);
+        Page<Driver> drivers=driverService.findAllByBrigade(brigadeName,pageable);
         int totalPages = drivers.getTotalPages();
         if (totalPages > 0) {
             List<Integer> pageNumbers = IntStream.rangeClosed(1, totalPages).boxed().collect(Collectors.toList());
@@ -243,7 +261,7 @@ public class DriverController {
                                    @RequestParam(name = "Age") int Age)
     {
         PageRequest pageable = PageRequest.of(page - 1, 15);
-        Page<Driver> drivers=driverService.findAllByBrigadeAndAge(driverBrigadeService.findByName(brigadeName),Age,pageable);
+        Page<Driver> drivers=driverService.findAllByBrigadeAndAge(brigadeName,Age,pageable);
         int totalPages = drivers.getTotalPages();
         if (totalPages > 0) {
             List<Integer> pageNumbers = IntStream.rangeClosed(1, totalPages).boxed().collect(Collectors.toList());
@@ -271,7 +289,7 @@ public class DriverController {
                                     @RequestParam(name = "Salary") int salary)
     {
         PageRequest pageable = PageRequest.of(page - 1, 15);
-        Page<Driver> drivers=driverService.findAllByBrigadeAndSalary(driverBrigadeService.findByName(brigadeName),salary,pageable);
+        Page<Driver> drivers=driverService.findAllByBrigadeAndSalary(brigadeName,salary,pageable);
         int totalPages = drivers.getTotalPages();
         if (totalPages > 0) {
             List<Integer> pageNumbers = IntStream.rangeClosed(1, totalPages).boxed().collect(Collectors.toList());
@@ -282,5 +300,20 @@ public class DriverController {
         model.addAttribute("driversList",drivers.getContent());
         model.addAttribute("Salary",salary);
         return "driver/driversSalaryInBrigade";
+    }
+
+    @GetMapping("/driversAll")
+    public String allDrivers(@RequestParam(name = "page",defaultValue = "1") int page,Model model)
+    {
+        PageRequest pageable = PageRequest.of(page - 1, 15);
+        Page<Driver>drivers=driverService.findAll(pageable);
+        int totalPages = drivers.getTotalPages();
+        if (totalPages > 0) {
+            List<Integer> pageNumbers = IntStream.rangeClosed(1, totalPages).boxed().collect(Collectors.toList());
+            model.addAttribute("pageNumbers", pageNumbers);
+        }
+        model.addAttribute("driversList",drivers.getContent());
+        model.addAttribute("count",drivers.getContent().size());
+        return "driver/allDrivers";
     }
 }

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link href="../static/css/pagination.css" th:href="@{/css/pagination.css}" rel="stylesheet" />
+</head>
+<body>
+<table style="width:100%">
+    <tr>
+        <th>Name</th>
+        <th>Brigade name</th>
+        <th>Sex</th>
+    </tr>
+    <tr th:each="w:${workersList}">
+        <td th:text="${w.getName()}">Jill</td>
+        <td th:text="${w.getSex()}">Smith</td>
+        <td th:text="${w.getAge()}">50</td>
+    </tr>
+</table>
+
+</body>
+</html>

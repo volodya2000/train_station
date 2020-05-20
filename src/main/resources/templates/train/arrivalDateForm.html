@@ -22,7 +22,7 @@
                 <li><a href="/allTrains">All trains</a></li>
                 <li><a href="/trainsNow">At current time</a></li>
                 <li><a href="/trainsByArrival">Find by arrival time</a></li>
-                <li><a href="/trainsByTrip"></a>Find by trip amount</li>
+                <li><a href="/trainsByTrip">Find by trip amount</a></li>
             </ul>
         </nav>
     </header>
@@ -32,7 +32,7 @@
             <form th:action="@{/trainsByArrivalTime}"   method="get" >
                 <div class="form-group">
                     <label > Date of arrival:</label>
-                    <input type="date" name="arrivalTime">
+                    <input type="text" name="arrivalTime">
                 </div>
                 <button type="submit" class="btn btn-primary">Submit</button>
             </form>

@@ -151,4 +151,19 @@ public class TrainRepairmanController {
         model.addAttribute("trainRepairmenList", workers.getContent());
         return "trainRepairman/trainRepairmenSalaryList";
     }
+
+    @GetMapping("/trainRepairmenAll")
+    public String getAll(@RequestParam(name = "page",defaultValue = "1")int page,Model model)
+    {
+        PageRequest pageable = PageRequest.of(page - 1, 15);
+        Page<TrainRepairman> workers=trainRepairManService.findAll(pageable);
+        int totalPages = workers.getTotalPages();
+        if (totalPages > 0) {
+            List<Integer> pageNumbers = IntStream.rangeClosed(1, totalPages).boxed().collect(Collectors.toList());
+            model.addAttribute("pageNumbers", pageNumbers);
+        }
+        model.addAttribute("count",workers.getContent().size());
+        model.addAttribute("trainRepairmenList", workers.getContent());
+        return "trainRepairman/allRepairmen";
+    }
 }

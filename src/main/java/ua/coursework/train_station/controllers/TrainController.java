@@ -20,11 +20,9 @@ import java.util.stream.IntStream;
 public class TrainController {
 
     private TrainService trainService;
-    private RouteService routeService;
 
-    public TrainController(TrainService trainService, RouteService routeService) {
+    public TrainController(TrainService trainService) {
         this.trainService = trainService;
-        this.routeService = routeService;
     }
 
     @GetMapping("/trains")
@@ -33,12 +31,14 @@ public class TrainController {
         return "train/menu";
     }
 
+    //4
     @GetMapping("/trainsByArrival")
     public String trainsByArrivalTime()
     {return "train/arrivalDateForm";}
 
+    //4
     @GetMapping("trainsByArrivalTime")
-    public String trainsByArrival(Model model,@RequestParam(required = false)Date arrivalTime,
+    public String trainsByArrival(Model model,@RequestParam(required = false)String arrivalTime,
                                   @RequestParam(name = "page",defaultValue = "1")int page)
     {
         PageRequest pageable = PageRequest.of(page - 1, 15);
@@ -51,11 +51,12 @@ public class TrainController {
         }
         System.out.println("date: "+arrivalTime);
         trains.getContent().stream().forEach(System.out::println);
+        model.addAttribute("count",trainService.countAllTrainsByEndOfTrip(arrivalTime));
         model.addAttribute("arrivalTime",arrivalTime);
         model.addAttribute("trainList",trains.getContent());
         return"train/trainsByArrivalTime";
     }
-
+    //4
     @GetMapping("/allTrains")
     public String getAllTrains(Model model, @RequestParam(value = "page",defaultValue = "1") int page)
     {
@@ -67,10 +68,12 @@ public class TrainController {
             List<Integer> pageNumbers= IntStream.rangeClosed(1,totalPages).boxed().collect(Collectors.toList());
             model.addAttribute("pageNumbers",pageNumbers);
         }
+        model.addAttribute("count",trainService.countAll());
         model.addAttribute("trainList",trains.getContent());
         return"train/allTrains";
     }
 
+    //4
     @GetMapping("/trainsNow")
     public String getAllTrainsAtCurrentTime(Model model,
                                             @RequestParam(name = "page",defaultValue = "1") int page )
@@ -83,17 +86,20 @@ public class TrainController {
             List<Integer> pageNumbers = IntStream.rangeClosed(1, totalPages).boxed().collect(Collectors.toList());
             model.addAttribute("pageNumbers", pageNumbers);
         }
+        model.addAttribute("count",trainService.countAllAtCurrentTime(date));
         model.addAttribute("arrivalTime",date);
         model.addAttribute("trainsList",trains.getContent());
         return "train/trainsAtCurrentTime";
     }
 
+    //4
     @GetMapping("/trainsByTrip")
     public String getAllTrainsByTrip()
     {
         return "train/numberTripsForm";
     }
 
+    //4
     @GetMapping("trainsByNumberOfTrips")
     public String getAllByTrips(@RequestParam(name = "page",defaultValue = "1")int page,
                                 Model model,@RequestParam(name = "numberOfTrips")int trips)
@@ -105,18 +111,21 @@ public class TrainController {
             List<Integer> pageNumbers = IntStream.rangeClosed(1, totalPages).boxed().collect(Collectors.toList());
             model.addAttribute("pageNumbers", pageNumbers);
         }
+        model.addAttribute("count",trainService.countAllTrainsByNumberOfTrips(trips));
         model.addAttribute("trainsList",trains.getContent());
         model.addAttribute("numberOfTrips",trips);
         return "train/trainsByNumberOfTrips";
     }
 
+    //5
     @GetMapping("/trainsInspection")
     public String getDatesOfInspection()
     {return "train/inspectionForm";}
 
+    //5
     @GetMapping("/trainsBetweenDatesOfInspection")
-    public String trainsInspectionByPeriodOfTime(Model model,@RequestParam(required = false,name = "begin")Date date1,
-                                  @RequestParam(required =false,name = "end")Date date2,
+    public String trainsInspectionByPeriodOfTime(Model model,@RequestParam(required = false,name = "begin")String date1,
+                                  @RequestParam(required =false,name = "end")String date2,
                                   @RequestParam(name = "page",defaultValue = "1")int page)
     {
         PageRequest pageable = PageRequest.of(page - 1, 15);
@@ -127,19 +136,21 @@ public class TrainController {
             List<Integer> pageNumbers= IntStream.rangeClosed(1,totalPages).boxed().collect(Collectors.toList());
             model.addAttribute("pageNumbers",pageNumbers);
         }
-
+        model.addAttribute("count",trainService.countAllTrainsByDateOfInspectionBetween(date1,date2));
         model.addAttribute("begin",date1);
         model.addAttribute("and",date2);
         model.addAttribute("trainList",trains.getContent());
         return"train/trainsBetweenDatesOfInspection";
     }
 
+    //5
     @GetMapping("/trainsDayInspection")
     public String getDateOfInspection()
     {return "train/inspectionDayForm";}
 
+    //5
     @GetMapping("/trainsDatesOfInspection")
-    public String trainsInspectionDay(Model model,@RequestParam(required = false,name = "date")Date date,
+    public String trainsInspectionDay(Model model,@RequestParam(required = false,name = "date")String date,
                                                  @RequestParam(name = "page",defaultValue = "1")int page)
     {
         PageRequest pageable = PageRequest.of(page - 1, 15);
@@ -150,16 +161,18 @@ public class TrainController {
             List<Integer> pageNumbers= IntStream.rangeClosed(1,totalPages).boxed().collect(Collectors.toList());
             model.addAttribute("pageNumbers",pageNumbers);
         }
-        System.out.println("date= "+date);
+        model.addAttribute("count",trainService.countAllTrainsByDateOfInspection(date));
         model.addAttribute("begin",date);
         model.addAttribute("trainList",trains.getContent());
         return"train/trainsDatesOfInspection";
     }
 
+    //5
     @GetMapping("/trainsNumberInspection")
     public String getNumberOfInspection()
     {return "train/inspectionNumberForm";}
 
+    //5
     @GetMapping("/trainsNumberOfInspection")
     public String trainsInspectionNumber(Model model,@RequestParam(required = false,name = "number")int number,
                                       @RequestParam(name = "page",defaultValue = "1")int page)
@@ -172,16 +185,18 @@ public class TrainController {
             List<Integer> pageNumbers= IntStream.rangeClosed(1,totalPages).boxed().collect(Collectors.toList());
             model.addAttribute("pageNumbers",pageNumbers);
         }
-
+        model.addAttribute("count",trainService.countAllTrainsByNumberOfInspections(number));
         model.addAttribute("number",number);
         model.addAttribute("trainList",trains.getContent());
         return"train/trainsNumberOfInspection";
     }
 
+    //5
     @GetMapping("/trainsAge")
     public String getTrainsByAge()
     {return "train/ageForm";}
 
+    //5
     @GetMapping("/trainsByAge")
     public String trainsByAge(Model model,@RequestParam(required = false,name = "age")int age,
                                          @RequestParam(name = "page",defaultValue = "1")int page)
@@ -194,16 +209,18 @@ public class TrainController {
             List<Integer> pageNumbers= IntStream.rangeClosed(1,totalPages).boxed().collect(Collectors.toList());
             model.addAttribute("pageNumbers",pageNumbers);
         }
-
+        model.addAttribute("count",trainService.countAllTrainsByAge(age));
         model.addAttribute("age",age);
         model.addAttribute("trainsList",trains.getContent());
         return"train/trainsAge";
     }
 
+    //5
     @GetMapping("/trainsTrips")
     public String getTripsBeforeInspection()
     {return "train/tripsBeforeForm";}
 
+    //5
     @GetMapping("/trainsTripsBeforeInspection")
     public String trainsTripsBeforeInspectionNumber(Model model,@RequestParam(required = false,name = "number")int number,
                                          @RequestParam(name = "page",defaultValue = "1")int page)
@@ -221,13 +238,13 @@ public class TrainController {
         model.addAttribute("trainsList",trains.getContent());
         return"train/trainsNumberTripsBeforeInspection";
     }
-
+    //6
     @GetMapping("/trainsRoutesName")
     public String getTrainsByRoutesName()
     {return "train/routesNameForm";}
-
+    //6
     @GetMapping("/trainsRoutesByName")
-    public String trainsTripsbyRoutesName(Model model,@RequestParam(required = false,name = "start")String start
+    public String trainsTripsByRoutesName(Model model,@RequestParam(required = false,name = "start")String start
                                                     ,@RequestParam(required = false,name = "finish")String finish
                                                     ,@RequestParam(name = "page",defaultValue = "1")int page)
     {
@@ -239,16 +256,18 @@ public class TrainController {
             List<Integer> pageNumbers= IntStream.rangeClosed(1,totalPages).boxed().collect(Collectors.toList());
             model.addAttribute("pageNumbers",pageNumbers);
         }
+        model.addAttribute("count",trainService.countAllByRouteStations(start, finish));
         model.addAttribute("start",start);
         model.addAttribute("finish",finish);
         model.addAttribute("trainsList",trains.getContent());
         return"train/trainsByRoutesName";
     }
 
+    //6
     @GetMapping("/trainsRoutesDuration")
     public String getTrainsByRoutesDuration()
     {return "train/routesDurationForm";}
-
+    //6
     @GetMapping("/trainsRoutesByDuration")
     public String trainsByRoutesDuration(Model model,@RequestParam(required = false,name = "duration")int duration
             ,@RequestParam(name = "page",defaultValue = "1")int page)
@@ -261,15 +280,16 @@ public class TrainController {
             List<Integer> pageNumbers= IntStream.rangeClosed(1,totalPages).boxed().collect(Collectors.toList());
             model.addAttribute("pageNumbers",pageNumbers);
         }
+        model.addAttribute("count",trainService.countAllByRouteDuration(duration));
         model.addAttribute("duration",duration);
         model.addAttribute("trainsList",trains.getContent());
         return"train/trainsByRoutesDuration";
     }
-
+    //6
     @GetMapping("/trainsRoutesPrice")
     public String getTrainsByRoutesPrice()
     {return "train/routesPriceForm";}
-
+    //6
     @GetMapping("/trainsRoutesByPrice")
     public String trainsByRoutesPrice(Model model,@RequestParam(required = false,name = "price")int price
             ,@RequestParam(name = "page",defaultValue = "1")int page)
@@ -282,15 +302,16 @@ public class TrainController {
             List<Integer> pageNumbers= IntStream.rangeClosed(1,totalPages).boxed().collect(Collectors.toList());
             model.addAttribute("pageNumbers",pageNumbers);
         }
+        model.addAttribute("count",trainService.countAllByRoutePrice(price));
         model.addAttribute("price",price);
         model.addAttribute("trainsList",trains.getContent());
         return"train/trainsByRoutesPrice";
     }
-
+    //6
     @GetMapping("/trainsRoutes")
     public String getTrainsByRoutes()
     {return "train/routesAllForm";}
-
+    //6
     @GetMapping("/trainsRoutesBy")
     public String trainsByRoutes(Model model,@RequestParam(required = false,name = "price")int price
             ,@RequestParam(name = "page",defaultValue = "1")int page,@RequestParam(required = false,name = "duration")int duration,
@@ -306,6 +327,7 @@ public class TrainController {
             List<Integer> pageNumbers= IntStream.rangeClosed(1,totalPages).boxed().collect(Collectors.toList());
             model.addAttribute("pageNumbers",pageNumbers);
         }
+        model.addAttribute("count",trainService.countAllTrainsByRouteAndDurationAndPrice(price, duration, start, finish));
         model.addAttribute("price",price);
         model.addAttribute("start",start);
         model.addAttribute("finish",finish);
@@ -314,4 +336,5 @@ public class TrainController {
         model.addAttribute("trainsList",trains.getContent());
         return"train/trainsByRoutes";
     }
+
 }
